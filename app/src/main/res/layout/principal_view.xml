@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blanco"
-        android:id="@+id/tbPrin"
+        android:id="@+id/tlPrin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -113,7 +113,7 @@
         android:background="@drawable/shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbPrin" />
+        app:layout_constraintTop_toBottomOf="@+id/tlPrin" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp"
@@ -122,7 +122,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbPrin"
+        app:layout_constraintTop_toBottomOf="@+id/tlPrin"
         />
 
 
