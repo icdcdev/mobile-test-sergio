@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.regnier.pruebahugo.views.fragments.FragmentAsignadasView
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
@@ -13,7 +14,12 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
     }
 
     override fun createFragment(position: Int): Fragment {
-        TODO("Not yet implemented")
+        val fragment = when (position){
+            0 -> FragmentAsignadasView()
+            else -> FragmentAsignadasView()
+        }
+
+        return fragment
     }
 
 }
