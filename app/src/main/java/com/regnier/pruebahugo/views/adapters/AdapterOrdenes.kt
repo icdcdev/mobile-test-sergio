@@ -2,6 +2,7 @@ package com.regnier.pruebahugo.views.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,12 @@ import com.regnier.pruebahugo.utlis.ItemClickListenerRv
 class AdapterOrdenes(private val context: Context, private var arrayOrders : ArrayList<OrdenesRecyclerModel>, private val asignada : Boolean , private val itemClickRv: ItemClickListenerRv) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+        private var listaCompleta = ArrayList<OrdenesRecyclerModel>()
+
+    init {
+
+        listaCompleta.addAll(arrayOrders)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -54,13 +61,16 @@ class AdapterOrdenes(private val context: Context, private var arrayOrders : Arr
             hold.tvStatus.background = statusColor
 
             hold.itemView.setOnClickListener {
-                itemClickRv.onItemClickRv(position,arrayOrders[position])
+                itemClickRv.onItemClickRv(holder.adapterPosition, arrayOrders[position])
             }
 
-        }
+            //hold.itemView.visibility = View.VISIBLE
+        }/*else{
+            hold.itemView.visibility = View.GONE
+        }*/
     }
 
-    private class Holder(binding: ItemRecyclerBinding): RecyclerView.ViewHolder(binding.root){
+    private class Holder(binding: ItemRecyclerBinding) : RecyclerView.ViewHolder(binding.root) {
 
         val tvOrder = binding.tvOrder
         val tvStatus = binding.tvStatus
@@ -81,5 +91,39 @@ class AdapterOrdenes(private val context: Context, private var arrayOrders : Arr
 
     fun getLista(): ArrayList<OrdenesRecyclerModel> {
         return arrayOrders
+    }
+
+
+    fun updateItem(item: OrdenesRecyclerModel) {
+        val index = arrayOrders.indexOf(item)
+        if (index != -1) {
+            arrayOrders[index] = item
+            arrayOrders.remove(arrayOrders[index])
+            //notifyItemChanged(index)
+            notifyDataSetChanged()
+        }
+    }
+
+
+    fun filter(filtro:String) {
+
+        arrayOrders.clear()
+
+        if (filtro.isEmpty()){
+
+            arrayOrders.addAll(listaCompleta)
+        }else{
+
+            for (item in listaCompleta){
+
+                if (item.orderId.lowercase().contains(filtro.lowercase())){
+                    arrayOrders.add(item)
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+
+
     }
 }

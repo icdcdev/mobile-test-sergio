@@ -11,5 +11,5 @@ class OrdenesRecyclerModel (
     val pyramidNumber: Long,
     val orderStatusId: Long,
     val orderStatus: String,
-    val asignada: Boolean
+    var asignada: Boolean
 )

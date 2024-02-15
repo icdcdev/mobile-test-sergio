@@ -6,7 +6,7 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:background="@color/fondo">
 
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbPrincipal"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -40,6 +40,7 @@
                 android:hint="Orden o folio"
                 android:id="@+id/etSearch"
                 android:paddingStart="10dp"
+                android:singleLine="true"
                 android:paddingEnd="10dp"
                 android:textColor="@color/negro"
                 android:textSize="15sp" />
@@ -126,6 +127,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tlPrin" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPrin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="Reloj"
+        app:srcCompat="@drawable/clock"
+        android:scaleType="center"
+        app:tint="@null"
+        app:backgroundTint="#3C32A2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

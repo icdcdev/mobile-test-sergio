@@ -3,18 +3,22 @@ package com.regnier.pruebahugo.viewsmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.regnier.pruebahugo.conexiones.Conexiones
+import com.regnier.pruebahugo.constants.Constants
 import com.regnier.pruebahugo.constants.Constants.arrayAsig
 import com.regnier.pruebahugo.models.OrdenesRecyclerModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FragmentAsignadasViewModel : ViewModel() {
+class FragmentNoAsignadasViewModel : ViewModel() {
 
     val cargando = MutableLiveData<Boolean>()
-    val conexiones = Conexiones()
+    private val conexiones = Conexiones()
     val mensaje = MutableLiveData<String>()
     val arregloOrdenes = MutableLiveData<ArrayList<OrdenesRecyclerModel>>()
+    val muestraDialogo = MutableLiveData<Boolean>()
+    val itemSel = MutableLiveData<OrdenesRecyclerModel>()
+    val itemModificado = MutableLiveData<OrdenesRecyclerModel>()
 
 
     fun cargarOrdenes(){
@@ -23,7 +27,7 @@ class FragmentAsignadasViewModel : ViewModel() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val arrayResult = arrayAsig
+            val arrayResult = conexiones.ordenes()
 
             if (arrayResult.size > 0){
 
@@ -40,8 +44,22 @@ class FragmentAsignadasViewModel : ViewModel() {
             cargando.postValue(false)
         }
 
-
     }
 
+    fun modificarItem(){
 
+        val indice = arregloOrdenes.value!!.indexOf(itemSel.value)
+
+        if (indice != -1){
+
+            arregloOrdenes.value!![indice].asignada = true
+            arregloOrdenes.value!![indice] = itemModificado.value!!
+
+            //arrayAsig.clear()
+            arrayAsig.add(arregloOrdenes.value!![indice])
+
+        }
+
+
+    }
 }

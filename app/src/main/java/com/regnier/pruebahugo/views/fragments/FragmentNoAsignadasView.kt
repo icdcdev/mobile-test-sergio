@@ -1,5 +1,6 @@
 package com.regnier.pruebahugo.views.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.regnier.pruebahugo.databinding.FragmentAsignadasViewBinding
 import com.regnier.pruebahugo.models.OrdenesRecyclerModel
@@ -16,13 +16,13 @@ import com.regnier.pruebahugo.utlis.ActualizaLista
 import com.regnier.pruebahugo.utlis.ItemClickListenerRv
 import com.regnier.pruebahugo.utlis.ItemEspacio
 import com.regnier.pruebahugo.views.adapters.AdapterOrdenes
-import com.regnier.pruebahugo.viewsmodels.FragmentAsignadasViewModel
+import com.regnier.pruebahugo.viewsmodels.FragmentNoAsignadasViewModel
 
-class FragmentAsignadasView : Fragment(), ItemClickListenerRv {
+class FragmentNoAsignadasView : Fragment(), ItemClickListenerRv {
 
     private lateinit var binding : FragmentAsignadasViewBinding
     private lateinit var adapterOrdenes : AdapterOrdenes
-    private val fragmentAsignadasViewModel : FragmentAsignadasViewModel by viewModels()
+    private val fragmentAsignadasViewModel : FragmentNoAsignadasViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +39,9 @@ class FragmentAsignadasView : Fragment(), ItemClickListenerRv {
         super.onViewCreated(view, savedInstanceState)
 
 
+        fragmentAsignadasViewModel.cargarOrdenes()
+
+
         listeners()
 
     }
@@ -46,7 +49,6 @@ class FragmentAsignadasView : Fragment(), ItemClickListenerRv {
     override fun onResume() {
         super.onResume()
 
-        fragmentAsignadasViewModel.cargarOrdenes()
 
     }
 
@@ -71,7 +73,7 @@ class FragmentAsignadasView : Fragment(), ItemClickListenerRv {
 
             if (resultado != "OK"){
 
-                Toast.makeText(activity,resultado,Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,resultado, Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -79,7 +81,7 @@ class FragmentAsignadasView : Fragment(), ItemClickListenerRv {
         fragmentAsignadasViewModel.arregloOrdenes.observe(viewLifecycleOwner){array ->
 
             if (!::adapterOrdenes.isInitialized) {
-                adapterOrdenes = AdapterOrdenes(requireActivity(),array,true,this)
+                adapterOrdenes = AdapterOrdenes(requireActivity(),array,false,this)
                 binding.rvAsig.adapter = adapterOrdenes
 
                 val llm = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -97,11 +99,48 @@ class FragmentAsignadasView : Fragment(), ItemClickListenerRv {
 
 
         }
+
+        fragmentAsignadasViewModel.muestraDialogo.observe(viewLifecycleOwner){isVisible ->
+
+            if (isVisible){
+                dialogoAsigna()
+            }
+        }
+    }
+
+    private fun dialogoAsigna(){
+
+        val builder = AlertDialog.Builder(requireActivity())
+
+        builder.setTitle("Asignar")
+        builder.setMessage("¿Quiere asignar esta orden?")
+        builder.setPositiveButton("Aceptar"){_,_ ->
+
+            fragmentAsignadasViewModel.modificarItem()
+
+            adapterOrdenes.updateItem(fragmentAsignadasViewModel.itemSel.value!!)
+            fragmentAsignadasViewModel.muestraDialogo.postValue(false)
+
+
+        }
+
+        builder.setNegativeButton("Cancelar"){_,_, ->
+
+            fragmentAsignadasViewModel.muestraDialogo.postValue(false)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     override fun onItemClickRv(posicion: Int, ordenesModel: OrdenesRecyclerModel) {
 
-        Toast.makeText(requireActivity(),"Seleccion ${ordenesModel.orderId}",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireActivity(),"Seleccion ${ordenesModel.orderId}", Toast.LENGTH_SHORT).show()
+
+        fragmentAsignadasViewModel.itemSel.postValue(ordenesModel)
+        fragmentAsignadasViewModel.itemModificado.postValue(ordenesModel)
+
+        fragmentAsignadasViewModel.muestraDialogo.postValue(true)
     }
 
     fun filterOrders(order : String){
