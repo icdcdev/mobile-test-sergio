@@ -15,6 +15,8 @@ class FragmentAsignadasViewModel : ViewModel() {
     val conexiones = Conexiones()
     val mensaje = MutableLiveData<String>()
     val arregloOrdenes = MutableLiveData<ArrayList<OrdenesRecyclerModel>>()
+    val fileItem = MutableLiveData<String?>()
+    val ordenAsignado = MutableLiveData<OrdenesRecyclerModel>()
 
 
     fun cargarOrdenes(){
@@ -41,6 +43,11 @@ class FragmentAsignadasViewModel : ViewModel() {
         }
 
 
+    }
+
+    fun actualizaFile(){
+
+        ordenAsignado.value!!.file = fileItem.value.toString()
     }
 
 

@@ -159,59 +159,80 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:background="@drawable/fondo_pyramid"
-                android:visibility="visible"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/fondo_pyramid"
+                    android:visibility="visible"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/ivCono"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/cono" />
+
+                    <TextView
+                        android:id="@+id/tvColorPyramid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toEndOf="@id/ivCono"
+                        android:textColor="@color/negro"
+                        android:textSize="18sp"
+                        tools:text="AMARILLO" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/vSepPyra"
+                        android:layout_alignTop="@+id/tvColorPyramid"
+                        android:layout_alignBottom="@+id/tvColorPyramid"
+                        android:layout_toEndOf="@+id/tvColorPyramid"
+                        android:layout_marginEnd="5dp"
+                        android:background="@color/gris"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:id="@+id/tvPyramidOrd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@+id/vSepPyra"
+                        android:textColor="@color/negro"
+                        android:textSize="18sp"
+                        tools:text="173" />
+
+                </RelativeLayout>
 
                 <ImageView
-                    android:id="@+id/ivCono"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/cono" />
-
-                <TextView
-                    android:id="@+id/tvColorPyramid"
+                    android:id="@+id/ivFotVid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_toEndOf="@id/ivCono"
-                    android:textColor="@color/negro"
-                    android:textSize="18sp"
-                    tools:text="AMARILLO" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/vSepPyra"
-                    android:layout_alignTop="@+id/tvColorPyramid"
-                    android:layout_alignBottom="@+id/tvColorPyramid"
-                    android:layout_toEndOf="@+id/tvColorPyramid"
-                    android:layout_marginEnd="5dp"
-                    android:background="@color/gris"
-                    android:layout_centerInParent="true"/>
-
-                <TextView
-                    android:id="@+id/tvPyramidOrd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toEndOf="@+id/vSepPyra"
-                    android:textColor="@color/negro"
-                    android:textSize="18sp"
-                    tools:text="173" />
+                    android:visibility="gone"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
 
             </RelativeLayout>
+
+
+
 
         </LinearLayout>
 

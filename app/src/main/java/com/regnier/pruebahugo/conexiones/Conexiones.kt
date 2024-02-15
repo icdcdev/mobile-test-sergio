@@ -54,7 +54,8 @@ class Conexiones {
                                     arrayOrdenes[x].pyramidNumber,
                                     arrayOrdenes[x].orderStatusId,
                                     arrayOrdenes[x].orderStatus,
-                                    false
+                                    false,
+                                    ""
                                 )
                             )
 

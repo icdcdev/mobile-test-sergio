@@ -64,10 +64,13 @@ class AdapterOrdenes(private val context: Context, private var arrayOrders : Arr
                 itemClickRv.onItemClickRv(holder.adapterPosition, arrayOrders[position])
             }
 
-            //hold.itemView.visibility = View.VISIBLE
-        }/*else{
-            hold.itemView.visibility = View.GONE
-        }*/
+            if (arrayOrders[position].file.isNotEmpty()){
+                hold.ivFotVid.visibility = View.VISIBLE
+            }else{
+                hold.ivFotVid.visibility = View.GONE
+            }
+
+        }
     }
 
     private class Holder(binding: ItemRecyclerBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -80,12 +83,15 @@ class AdapterOrdenes(private val context: Context, private var arrayOrders : Arr
         val tvPlacas = binding.tvPlacas
         val tvColorPyramid = binding.tvColorPyramid
         val tvPyramidOrd = binding.tvPyramidOrd
+        val ivFotVid = binding.ivFotVid
 
 
     }
 
     fun setLista(nuevaLista: ArrayList<OrdenesRecyclerModel>) {
         arrayOrders = nuevaLista
+        listaCompleta.clear()
+        listaCompleta.addAll(arrayOrders)
         notifyDataSetChanged()
     }
 
@@ -98,9 +104,17 @@ class AdapterOrdenes(private val context: Context, private var arrayOrders : Arr
         val index = arrayOrders.indexOf(item)
         if (index != -1) {
             arrayOrders[index] = item
-            arrayOrders.remove(arrayOrders[index])
+
+            if (asignada){
+                notifyItemChanged(index)
+            }else{
+                arrayOrders.remove(arrayOrders[index])
+                notifyDataSetChanged()
+            }
+
+            //arrayOrders.remove(arrayOrders[index])
             //notifyItemChanged(index)
-            notifyDataSetChanged()
+
         }
     }
 

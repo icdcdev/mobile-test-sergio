@@ -1,8 +1,14 @@
 package com.regnier.pruebahugo.constants
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Environment
 import com.regnier.pruebahugo.models.OrdenesRecyclerModel
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object Constants {
 
@@ -29,5 +35,25 @@ object Constants {
         val editor: SharedPreferences.Editor = userData.edit()
         editor.putString(key,data)
         editor.apply()
+    }
+
+     fun nombreImagen(activity: Activity): File {
+        val nomTiempo: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val dir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "pruebaHugo_${nomTiempo}",
+            ".jpg",
+            dir
+        )
+    }
+
+    fun nombreVideo(activity: Activity): File {
+        val nomTiempo: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val dir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "pruebaHugo_${nomTiempo}",
+            ".mp4",
+            dir
+        )
     }
 }
